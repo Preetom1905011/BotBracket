@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
-    "react-alert": "^7.0.3",
     "react-bootstrap-icons": "^1.10.2",
     "react-dom": "^18.2.0",
     "react-native": "^0.71.3",
