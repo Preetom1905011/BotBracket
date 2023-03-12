@@ -1,126 +1,92 @@
-import React, { useState } from 'react'
-import { Trash, PencilSquare, Save } from 'react-bootstrap-icons'
-import Popup from './Popup'
+import React, { useEffect, useState } from "react";
+import { Trash, PencilSquare, Save } from "react-bootstrap-icons";
+import Popup from "./Popup";
+import { useBotsContext } from "../contexts/useBotContext";
+import { useSelectedTMContext } from "../contexts/useSelectedTMContext";
+import "../styles/roster.css";
+import '../styles/card.css';
 
-const BotList = ({names, setNames, handleSortName}) => {
+const BotList = ({
+  sortedNames,
+  setSortedNames,
+  selectedBot,
+  setSelectedBot,
+  allowAddBot,
+  setAllowAddBot,
+  setInput,
+  setShowForm
+}) => {
+  const { names, dispatch } = useBotsContext();
+  const { selectedTourney } = useSelectedTMContext();
 
-  const [editing, setEditing] = useState({
-    allowEdit: true,
-    id: null,
-  });
-  const [newName, setNewName] = useState({});
-  const [popup, setPopup] = useState({
-    show: false, // initial values set to false and null
-    id: null,
-  });
-
-  const handleEdit = ({id}) => {
-    setEditing({allowEdit: true, id: id});
-    const editedName = names.find(name => name.id === id);
-    setNewName({"newbotname": editedName.title, "newchipnum": editedName.chip});
-  };
-
-  const handleSave = (event) => {
-    event.preventDefault();
-    const edited = names.map(name =>
-                      name.id === editing.id && editing.allowEdit
-                        ? { ...name, id: name.id, title: newName.newbotname , chip: newName.newchipnum}
-                        : name
-                    )
-    handleSortName(edited);
-    setEditing({allowEdit: true, id: null});
-  };
-
-  // This will show the Cofirmation Box
-
-  const handleDelete = ({id}) => {
-    setPopup({
-      show: true,
-      id: id,
-    });
-    setEditing({allowEdit: false, id: null});
-  };
-
-  // This will perform the deletion and hide the Confirmation Box
-
-  const handleDeleteTrue = () => {
-    if (popup.show && popup.id) {
-      let filteredNames = names.filter((name) => name.id !== popup.id);
-      setNames(filteredNames);
-      setPopup({
-        show: false,
-        id: null,
-      });
+  // selects the clicked bot
+  const handleSelectBot = (name) => {
+    console.log(name);
+    console.log(sortedNames);
+    setSelectedBot(name);
+    if (!allowAddBot){
+      setAllowAddBot(true);
+      setShowForm(false);
+      setInput({});
     }
-    setEditing({allowEdit: true, id: null});
-  };
+  }
 
-  // This will just hide the Confirmation Box when user clicks "No"/"Cancel"
+  useEffect(() => {
+    setSortedNames([...names].sort((a, b) => b.chip - a.chip));
+  }, [names]);
 
-  const handleDeleteFalse = () => {
-    setPopup({
-      show: false,
-      id: null,
-    });
-    setEditing({allowEdit: true, id: null});
-  };
+  // retrieving data from DB
+  useEffect(() => {
+    const fetchBots = async () => {
+      if (selectedTourney._id !== "Default") {
+        const response = await fetch(
+          "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id
+        );
+        const json = await response.json();
 
-  const handleChange = (event) => {
-    setNewName(prevState => ({ ...prevState, [event.target.name]: event.target.value }))
-  };
+        if (response.ok) {
+          console.log("-->", json);
+          const data = json.map(
+            (bot) => (bot = { _id: bot._id, title: bot.title, chip: bot.chip, teamname: bot.teamname, weightclass: bot.weightclass, signature: bot.signature })
+          );
+          console.log("SET DATA", data);
+          // setNames(data)
+          dispatch({ type: "SET_BOTS", payload: data });
+          console.log(names);
+          setSortedNames(names);
+        } else {
+          console.log("failed");
+        }
+      }
+    };
+
+    fetchBots();
+  }, []);
 
   return (
     <div>
-        {names.map(name => (
-          <li className='list-item container' key={name.id}>
-            {editing.id === name.id && !popup.show ? (
-              <form className='edit-form' onSubmit={handleSave} onChange={handleChange}>
-                <input
-                  type="text"
-                  className='text-edit-input'
-                  name="newbotname"
-                  autocomplete="off"
-                  value={newName.newbotname} 
-                  required
-                />
-                <input
-                  type="number"
-                  className='num-edit-input'
-                  name="newchipnum"
-                  autocomplete="off"
-                  value={newName.newchipnum} 
-                  min="0"
-                  required
-                />
-                <Save className="button-sv" onClick={handleSave}></Save>
-              </form>
-            ) : (
-              <>
-                {popup.id !== name.id && (
-                <>{name.title} 
-                  <div>
-                    {name.chip} &nbsp;
-                    <PencilSquare className='button-del-ed' onClick={() => handleEdit(name)}/>
-                    <Trash className='button-del-ed' onClick={() => handleDelete(name)}/>
-                  </div>
-                </>
-                )}
-                {popup.id === name.id && popup.show && (
-                  <>
-                    {name.title} 
-                    <Popup
-                      handleDeleteTrue={handleDeleteTrue}
-                      handleDeleteFalse={handleDeleteFalse}
-                    />
-                  </>
-                )}
-              </>
-            )}
+      {sortedNames.map((name) =>
+        selectedBot && selectedBot._id === name._id ? (
+          <li
+            className="list-item container roster-list-item-selected"
+            key={name._id}
+          >
+            {name.title}
+            <div>{name.chip} &nbsp;</div>
           </li>
-        ))}
+        ) : (
+          <li
+            className="list-item container"
+            onClick={() => {handleSelectBot(name);}}
+            key={name._id}
+          >
+            {name.title}
+            <div>{name.chip} &nbsp;</div>
+          </li>
+        )
+      )}
     </div>
-  )
-}
+  );
+};
 
-
-export default BotList
+export default BotList;

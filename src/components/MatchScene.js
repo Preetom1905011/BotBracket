@@ -1,99 +1,180 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/matchScene.css'
 import MatchCard from './MatchCard'
 import scrappyRed from '../media/Updated_Logo_red.png'; 
 import scrappyBlue from '../media/Updated_Logo_blue2.png'; 
 import vs_logo from '../media/VS_img2.png'; 
 import WinToggle from './WinToggle';
-import { useCallback } from 'react';
 import Timer from './Timer';
+import { useBotsContext } from '../contexts/useBotContext';
+import { useMatchesContext } from '../contexts/useMatchContext';
+import {useSelectedTMContext} from '../contexts/useSelectedTMContext';
 
-export default function MatchScene({names, setNames}) {
+export default function MatchScene({sortedNames}) {
 
-  const [outRed, setOutRed] = useState({id:"", bet:0, result:""});
-  const [outBlue, setOutBlue] = useState({id:"", bet:0, result:""});
+  const {names, dispatch} = useBotsContext()
+  const {matches, dispatch: matchDispatch} = useMatchesContext()
+  const {selectedTourney} = useSelectedTMContext()
+  const [outRed, setOutRed] = useState({_id:"", bet:0, result:""});
+  const [outBlue, setOutBlue] = useState({_id:"", bet:0, result:""});
   const [toggleState, setToggleState] = useState('na');
   const [reset, setReset] = useState(false);
-  const [matches, setMatches] = useState([]);
+  const [timerState, setTimerState] = useState("reset");
 
-  const handleEndMatch = (e) => {
+  // to prevent same bots being chosen 
+  const [fightersDuo, setFightersDuo] = useState([]);
+
+  // call PATCH request here to update botlist
+  const handleEndMatch = async (e) => {
     console.log(toggleState);
     setReset(!reset);
 
-    let winnerName = {id:""};
-    let loserName = {id:""};
+    let winnerName = {_id:""};
+    let loserName = {_id:""};
+    let newMatch = null;
 
-    const redName = (names.find(name => name.id === outRed.id)).title;
-    const blueName = (names.find(name => name.id === outBlue.id)).title;
+    console.log("outRed", outRed);
+    try{
+      const redName = (names.find(name => name._id === outRed._id)).title;
+      const blueName = (names.find(name => name._id === outBlue._id)).title;
     
-    if (outRed.result === "winner" && outBlue.result === "loser"){
-      winnerName = outRed;
-      loserName = outBlue;
+      if (outRed.result === "winner" && outBlue.result === "loser"){
+        winnerName = outRed;
+        loserName = outBlue;
 
-      setMatches([...matches, {"red": redName, "redScore": '+'+loserName.bet, "blue": blueName, "blueScore": '-'+loserName.bet}]);
-    }
-    else if (outRed.result === "loser" && outBlue.result === "winner"){
-      winnerName = outBlue;
-      loserName = outRed;
-
-      setMatches([...matches, {"red": redName, "redScore": '-'+loserName.bet, "blue": blueName, "blueScore": '+'+loserName.bet}]);
-    }
-    
-    const edited = names.map(name =>{
-      if (name.id === winnerName.id && winnerName.id !== loserName.id) {
-          return { ...name, chip: Number(name.chip) + Number(loserName.bet)};
+        // setMatches([...matches, {"red": redName, "redScore": '+'+loserName.bet, "blue": blueName, "blueScore": '-'+loserName.bet}]);
+        newMatch = {"red": redName, "redScore": '+'+loserName.bet, "blue": blueName, "blueScore": '-'+loserName.bet}
       }
-      else if (name.id === loserName.id  && winnerName.id !== loserName.id) {
-        return { ...name, chip: Number(name.chip) - Number(loserName.bet)};
+      else if (outRed.result === "loser" && outBlue.result === "winner"){
+        winnerName = outBlue;
+        loserName = outRed;
+
+        // setMatches([...matches, {"red": redName, "redScore": '-'+loserName.bet, "blue": blueName, "blueScore": '+'+loserName.bet}]);
+        newMatch = {"red": redName, "redScore": '-'+loserName.bet, "blue": blueName, "blueScore": '+'+loserName.bet}
       }
-      else return name;
-    });
-    
+      
+      const winner = names.find((name) => name._id === winnerName._id)
+      const loser = names.find((name) => name._id === loserName._id)
 
-    handleSortName(edited);
-    setToggleState("na");
-    setOutRed({id:"", bet:0, result:""});
-    setOutBlue({id:"", bet:0, result:""});
+      console.log("match", matches);
+      // update winner
+      const response1 = await fetch('http://localhost:4000/api/participants/'+winner._id, {
+        method: 'PATCH',
+        body: JSON.stringify({chip: winner.chip + Number(loserName.bet)}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json1 = await response1.json()
+      if (response1.ok){
+        dispatch({type: 'UPDATE_BOT', payload: json1})
+      }
+      // update loser
+      const response2 = await fetch('http://localhost:4000/api/participants/'+loser._id, {
+        method: 'PATCH',
+        body: JSON.stringify({chip: loser.chip - Number(loserName.bet)}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json2 = await response2.json()
+      if (response2.ok){
+        dispatch({type: 'UPDATE_BOT', payload: json2})
+      }
 
-    console.log(matches);
+      // add match to DB
+      const response3 = await fetch('http://localhost:4000/api/matches', {
+        method: 'POST',
+        body: JSON.stringify(newMatch),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json3 = await response3.json()
+
+      if (!response3.ok){
+        alert(json3.error)
+      }
+      else {
+        // setError(null);
+        console.log("New Match Added")
+        matchDispatch({type: "ADD_MATCH", payload: json3})
+        // add match to the TM DB
+        const response4 = await fetch('http://localhost:4000/api/tournaments/matches/'+selectedTourney._id, {
+          method: 'POST',
+          body: JSON.stringify(json3),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+      }
+
+      setToggleState("na");
+      setOutRed({_id:"", bet:0, result:""});
+      setOutBlue({_id:"", bet:0, result:""});
+    } catch(error) {
+      console.log("No Bot selected")
+    }
 
   }
 
-  const handleSortName = (names) => {
-    // set the state to the newly created sorted array with the three dots operator:
-    setNames(
-      [...names].sort((a, b) => Number(b.chip) - Number(a.chip))
-    );
-  };
 
-  // const childApi = useCallback((api) => {
-  //   // do something in the parent with the childs exposed api
-  //   api.updateState();
-  // });
+  // mount all the matches from DB
+  useEffect(() => {
+    const fetchMatches = async () => {
+      if (selectedTourney._id !== "Default"){
+        const response = await fetch('http://localhost:4000/api/tournaments/matches/'+selectedTourney._id)
+        const json = await response.json()
+
+        if (response.ok){
+          console.log("-->", json)
+          console.log("SET MATCH", json)
+          // setNames(data)
+          matchDispatch({type: 'SET_MATCHES', payload: json})
+        }
+        else{
+          console.log("failed")
+        }
+      }
+    }
+    fetchMatches()
+  }, [])
+
 
   return (
     <div className='backdrop'>
         <Timer 
             toggleState={toggleState} 
             setToggleState={setToggleState}
+            timerState={timerState} 
+            setTimerState={setTimerState}
             reset={reset} 
             outRed={outRed} 
             outBlue={outBlue}></Timer>
         <div className='side-grid'>
           <MatchCard 
               reset={reset}
-              names={names} 
+              sortedNames={sortedNames}
               outcome={outRed}
               setOutcome={setOutRed}
+              fightersDuo={fightersDuo}
+              setFightersDuo={setFightersDuo}
+              toggleState={toggleState}
+              timerState={timerState} 
               select_style={"fighter-select"} 
               confirm_style={"fighter-confirmed"}
               scrappy={scrappyRed}></MatchCard>
           <img src={vs_logo} className="vs_img"/>
           <MatchCard 
               reset={reset}
-              names={names} 
+              sortedNames={sortedNames}
               outcome={outBlue}
               setOutcome={setOutBlue}
+              fightersDuo={fightersDuo}
+              setFightersDuo={setFightersDuo}
+              toggleState={toggleState}
+              timerState={timerState} 
               select_style={"fighter-select fighter-select2"} 
               confirm_style={"fighter-confirmed fighter-confirmed2"}
               scrappy={scrappyBlue}></MatchCard>
@@ -112,8 +193,8 @@ export default function MatchScene({names, setNames}) {
         <div className='match-history'>
           <h3>Match History</h3>
           <div className='scroll'>
-            {matches.slice(0).reverse().map(match => (
-              <li className='match-hist-list' key={match.red + " " + match.blue}>
+            {matches.map(match => (
+              <li className='match-hist-list' key={match._id}>
                 <div className='match-list-each'>
                   <span>{match.red}</span> 
                   {match.redScore}

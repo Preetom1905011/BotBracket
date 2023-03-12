@@ -57,7 +57,6 @@
   box-shadow: 5px 5px 5px #E31C25;
 }
 .matchCard:nth-of-type(odd):hover {
-  transform: translateY(-0.5rem) translateX(-0.5rem);
   box-shadow: 10px 10px 10px #E31C25;
 }
 .matchCard:nth-of-type(even) {
@@ -65,7 +64,6 @@
   box-shadow: 5px 5px 5px #0d47b3;
 }
 .matchCard:nth-of-type(even):hover {
-  transform: translateY(-0.5rem) translateX(-0.5rem);
   box-shadow: 10px 10px 10px #0d47b3;
 }
 
@@ -185,6 +183,20 @@
   border-radius: 0.25rem;
   border: 1px solid rgb(210, 208, 208);
   color: rgb(210, 208, 208);
+}
+.fighter-confirmed button:disabled {
+  border: 1px solid rgb(210, 208, 208);
+  box-shadow: none;
+  color: rgb(210, 208, 208);
+  transform: none;
+  box-shadow: none;
+}
+.fighter-confirmed button:disabled:hover {
+  border: 1px solid rgb(210, 208, 208);
+  box-shadow: none;
+  color: rgb(210, 208, 208);
+  transform: none;
+  box-shadow: none;
 }
 .fighter-confirmed button:hover {
   border: 1px solid #E31C25;

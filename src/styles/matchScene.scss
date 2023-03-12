@@ -83,7 +83,7 @@ $border-color: rgb(210, 208, 208);
         margin-left: 5vw;
         box-shadow: 5px 5px 5px $main-color;
         &:hover {
-            transform: translateY(-0.5rem) translateX(-0.5rem);
+            // transform: translateY(-0.5rem) translateX(-0.5rem);
             box-shadow: 10px 10px 10px  $main-color;
             // background-color: #fb7278;
         }
@@ -92,7 +92,7 @@ $border-color: rgb(210, 208, 208);
         margin-right: 5vw;
         box-shadow: 5px 5px 5px $list-color2;
         &:hover {
-            transform: translateY(-0.5rem) translateX(-0.5rem);
+            // transform: translateY(-0.5rem) translateX(-0.5rem);
             box-shadow: 10px 10px 10px $list-color2
             // background-color: #fb7278;
         }
@@ -188,6 +188,7 @@ $border-color: rgb(210, 208, 208);
 
     button{
         box-shadow: 2px 2px 2px $list-color2;
+
         &:hover{
             box-shadow: 4px 4px 4px $list-color2;
         }
@@ -239,6 +240,21 @@ $border-color: rgb(210, 208, 208);
         border-radius: 0.25rem;
         border: 1px solid $border-color;
         color: $border-color;
+
+        &:disabled {
+            border: 1px solid $border-color;
+            box-shadow: none;
+            color: $border-color;
+            transform: none;
+            box-shadow: none;
+            &:hover{
+                border: 1px solid $border-color;
+                box-shadow: none;
+                color: $border-color;
+                transform: none;
+                box-shadow: none;
+            }
+        }
         &:hover{
             border: 1px solid $main-color;
             color: $main-color;

@@ -3,11 +3,12 @@ import "../styles/matchScene.css";
 import { PlusCircle } from 'react-bootstrap-icons'
 import { useState } from 'react';
 import { useEffect } from 'react';
-// import { useAlert } from 'react-alert';
+import { useBotsContext } from '../contexts/useBotContext';
 
 
 export default function MatchCard(props) {
-  const {reset, names, outcome, setOutcome, select_style, confirm_style, scrappy} = props;
+  const {names} = useBotsContext()
+  const {reset, sortedNames, outcome, setOutcome, fightersDuo, setFightersDuo, toggleState, timerState, select_style, confirm_style, scrappy} = props;
 
   const [allowPlus, setAllowPlus] = useState(true);
   const [selectedFighter, setSelectedFighter] = useState({});
@@ -21,6 +22,7 @@ export default function MatchCard(props) {
       setFighterId("");
       setBet(1);
       setIsConfirmed(false);
+      setFightersDuo([]);
   }, [reset]);
 
   const handlePlus = () => {
@@ -31,7 +33,8 @@ export default function MatchCard(props) {
       setAllowPlus(true);
       setFighterId("");
       setBet(1);
-      setOutcome({id:"", bet:0, result:""});
+      setOutcome({_id:"", bet:0, result:""});
+      setFightersDuo(fightersDuo.filter((id) => id !== fighterId));
     }
     setIsConfirmed(false);
     // console.log(names);
@@ -39,7 +42,7 @@ export default function MatchCard(props) {
   const handleConfirm = (event) => {
     event.preventDefault();
     
-    const bot = names.find(name => name.id === fighterId);
+    const bot = names.find(name => name._id === fighterId);
     if (bot !== undefined){
       if (Number(bet) < 1 || Number(bet) > Number(bot.chip)){
         alert("You cannot bet " + bet + " chips.\n" + bot.title + " only has " + bot.chip + " chips");
@@ -57,6 +60,8 @@ export default function MatchCard(props) {
         else {
           setOutcome({...bot, bet: bet, result:""});
         }
+        setFightersDuo([...fightersDuo, bot._id]);
+        console.log("duo", fightersDuo)
       }
     }
   }
@@ -80,8 +85,8 @@ export default function MatchCard(props) {
                 onChange={handleFighterId}
               >
                 <option value="">Select Bot</option>
-                {names.filter((name) => name.chip !== 0).map(name => (
-                  <option value={name.id}>{name.title}</option>
+                {sortedNames.filter((name) => name.chip !== 0 && !fightersDuo.includes(name._id)).map(name => (
+                  <option value={name._id}>{name.title}</option>
                 ))}
               </select>
               <img src={scrappy} alt="Logo"/>
@@ -90,7 +95,7 @@ export default function MatchCard(props) {
                   name="bet"
                   autoComplete="off"
                   value={bet}
-                  max= {fighterId === ""? 1: names.find((name) => name.id === fighterId).chip}
+                  max= {fighterId === ""? 1: names.find((name) => name._id === fighterId).chip}
                   min={1}
                   onChange={(e) => {setBet(e.target.value)}}
                   required
@@ -105,7 +110,7 @@ export default function MatchCard(props) {
                 <h3>{selectedFighter.title}</h3> 
                 <img src={scrappy} alt="Logo"/>
                 <h4>Bet: {selectedFighter.bet}</h4>
-                <button onClick={handlePlus}>Remove</button>
+                <button onClick={handlePlus} disabled={toggleState !== "na" || timerState !== "reset" }>Remove</button>
               </div>
           )}
           </>

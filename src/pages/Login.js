@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
 import "../styles/login.css";
 import { CSSTransition } from "react-transition-group";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,11 +10,10 @@ export default function Login() {
   return (
     <div className="hide-OF">
       <div className="col-container">
-        <Navbar></Navbar>
         <CSSTransition appear in classNames="login-transition" timeout={350}>
           <div className="login pad-2">
             <h2>Welcome To BotBracket</h2>
-            <form action="POST" className="col-container pad-2">
+            <form className="col-container pad-2">
               <label className="left-align">Email Address</label>
               <input
                 type="email"
@@ -30,7 +28,7 @@ export default function Login() {
                   setPassword(e.target.value);
                 }}
               />
-              <button className="login-bt" type="submit">
+              <button className="login-bt" type="submit" value="Login">
                 Log In
               </button>
               <a className="right-align">Forgot Password?</a>

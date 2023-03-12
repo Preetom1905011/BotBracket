@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import '../styles/card.css'
 import logo from "../media/scrappyhead_sticker.png"
 
 export default function Navbar() {
+
+
   return (
     <div className="navbar" id="navbar">
         <img src={logo}/>

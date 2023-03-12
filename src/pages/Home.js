@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import home_img from '../media/home_img.png';
 import scrappy_sticker from '../media/scrappy-sticker.png';
 import '../styles/home.css';
@@ -8,7 +7,6 @@ import { CSSTransition } from 'react-transition-group';
 export default function Home() {
   return (
     <div className='homepage'>
-      <Navbar></Navbar>
 
       <div className='main'>
         <div>
@@ -22,8 +20,14 @@ export default function Home() {
         <img src={scrappy_sticker}/>
         <div className='intro-text'>
           <h2>What is BotBracket?</h2>
-          <p>"Water. Earth. Fire. Air. Long ago, the four nations lived together in harmony. Then, everything changed when the Fire Nation attacked. Only the Avatar, master of all four elements, could stop them, but when the world needed him most, he vanished. A hundred years passed and my brother and I discovered the new Avatar, an airbender named Aang. And although his airbending skills are great, he has a lot to learn before he's ready to save anyone. But I believe Aang can save the world."
-          </p>
+          <h3> Well, Hello there, fellow stranger. The name's Scrappy. You're here which means you must love 
+              seeing two robots duking it out - Big Hero 6 style. But are you having trouble managing a robot 
+              tournament in a civilised, sophisticated manner? Well, that's where BOTBRACKET comes into play. It helps
+              you create tournaments, add bots, do safety check - all in a cool, bedazzling way (Imagine using Google 
+              Sheets for this, am I right?). So what are you waiting for? Go on and setup a tournament to make robots 
+              demolish each other for your pleasure. It's not like we have lives or loved ones or anything. Just Kidding. 
+              Now go on, shoosh. Time for my daily oil change.
+          </h3>
         </div>
       </div>
       

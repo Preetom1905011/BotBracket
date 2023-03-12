@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../styles/timer.css';
 
 export default function Timer(props) {
-    const {toggleState, setToggleState, reset, outRed, outBlue} = props;
+    const {toggleState, setToggleState, timerState, setTimerState, reset, outRed, outBlue} = props;
 
     const [time, setTime] = useState({minutes: "00", seconds: "00"});
     // const [minutes, setMinutes] = useState(0);
     // const [seconds, setSeconds] = useState(0);
     const [counter, setCounter] = useState(0);
-    const [timerState, setTimerState] = useState("reset");
 
     useEffect(() => {
         if (counter >= 0 && timerState === "start") {
@@ -18,7 +17,9 @@ export default function Timer(props) {
             setTime({minutes: Math.floor(counter / 60).toString().padStart(2, '0'), seconds: Math.floor(counter % 60).toString().padStart(2, '0')});
         }
         else {
-            setTimerState("reset");
+            if (counter < 0){
+                setTimerState("reset");
+            }
         }
     }, [counter]);
 
@@ -92,7 +93,7 @@ export default function Timer(props) {
                     : <button 
                             className='timer-bt' 
                             onClick={startTimer}
-                            disabled={toggleState === "na" && (outRed.id !== "" && outBlue.id !== "")? false: true}>Start</button>}
+                            disabled={toggleState === "na" && (outRed._id !== "" && outBlue._id !== "")? false: true}>Start</button>}
             <button 
                 className='timer-bt' 
                 onClick={resetTimer}>Reset</button>

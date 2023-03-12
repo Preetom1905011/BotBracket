@@ -28,31 +28,33 @@
 
 .button-style {
   width: 5.2rem;
-  height: 3.2rem;
-  margin-bottom: 2rem;
+  height: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
   border: none;
-  background-color: #e13941;
-  box-shadow: inset 0 2px 4px lightgray, 5px 5px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgb(56, 183, 225);
+  box-shadow: inset 0 2px 4px lightgray, 2px 2px 2px rgba(0, 0, 0, 0.2);
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 .button-style:hover {
-  background-color: lightsteelblue;
-  color: #161616;
+  background-color: rgb(38, 115, 215);
   border: 0.01px solid lightslategrey;
   transform: translateX(0.25rem);
 }
 
 .bot-input {
-  width: 12rem;
+  width: 20rem;
   height: 3rem;
+  margin-top: 1rem;
   margin-right: 1rem;
   margin-bottom: 2rem;
   display: flex;
@@ -61,15 +63,17 @@
   justify-content: space-around;
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
+  border: none;
   background-color: white;
-  color: rgb(230, 26, 26);
+  color: black;
   border-radius: 0.5rem;
-  box-shadow: inset 0 5px 7px lightgray, 0 1px 0 rgba(88, 25, 235, 0.2);
+  box-shadow: inset 0 5px 7px lightgray, 0 1px 0 rgb(56, 183, 225);
 }
 
 .num-input {
-  width: 5rem;
+  width: 8rem;
   height: 3rem;
+  margin-top: 1rem;
   margin-right: 1rem;
   margin-bottom: 2rem;
   display: flex;
@@ -77,11 +81,13 @@
   align-items: center;
   justify-content: space-around;
   font-size: 1rem;
+  text-align: center;
   padding: 0.5rem 1rem;
+  border: none;
   background-color: white;
-  color: rgb(230, 26, 26);
+  color: black;
   border-radius: 0.5rem;
-  box-shadow: inset 0 5px 7px lightgray, 0 1px 0 rgba(88, 25, 235, 0.2);
+  box-shadow: inset 0 5px 7px lightgray, 0 1px 0 rgb(56, 183, 225);
 }
 
 .container {
@@ -103,21 +109,29 @@
   list-style-type: none;
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
-  background-color: #E31C25;
+  background-color: rgb(56, 183, 225);
   color: white;
   border-radius: 0.5rem;
   box-shadow: inset 0 2px 4px lightgray, 5px 5px 2px rgba(0, 0, 0, 0.2);
 }
-.list-item:nth-of-type(odd) {
-  background-color: #E31C25;
-}
-.list-item:nth-of-type(even) {
-  background-color: #0d47b3;
-}
 .list-item:hover {
-  background-color: lightsteelblue;
+  background-color: paleturquoise;
   color: #161616;
   border: 1px solid lightslategrey;
+  transform: translateX(0.5rem);
+}
+
+.roster-list-item-selected {
+  color: black;
+  background-color: paleturquoise;
+  border: 1px solid lightslategrey;
+  box-shadow: inset 0 2px 4px rgb(211, 211, 211), 5px 5px 2px #59cef1;
+  transform: translateX(0.5rem);
+}
+.roster-list-item-selected:hover {
+  color: black;
+  border: 1px solid lightslategrey;
+  background-color: paleturquoise;
   transform: translateX(0.5rem);
 }
 
@@ -184,6 +198,7 @@
   align-items: center;
   justify-content: space-around;
   padding: 1rem 0.25rem;
+  background-color: #fcafb2;
 }
 .navbar h1 {
   flex: 1.5;
@@ -196,7 +211,7 @@
   text-decoration: none;
 }
 .navbar h1 a:hover {
-  text-shadow: 2px 2px 2px rgb(173, 169, 169);
+  text-shadow: 2px 2px 2px rgb(249, 240, 240);
 }
 .navbar ul {
   list-style: none;
@@ -211,7 +226,7 @@
   color: #e13941;
 }
 .navbar ul a:hover {
-  text-shadow: 2px 2px 2px rgb(173, 169, 169);
+  text-shadow: 2px 2px 2px rgb(249, 240, 240);
 }
 .navbar img {
   height: 100%;
