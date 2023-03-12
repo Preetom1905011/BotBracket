@@ -1,5 +1,5 @@
 # BotBracket
 
-## To make Robot Fights easier to manage
+## To make Robot Fights Easier to Manage
 
-## Under construction
+## Under Construction
