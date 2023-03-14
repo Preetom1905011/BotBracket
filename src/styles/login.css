@@ -34,6 +34,11 @@
   font-size: 1.2rem;
 }
 
+.signup {
+  width: 35rem;
+  height: 35rem;
+}
+
 .left-align {
   width: 20rem;
   text-align: left;

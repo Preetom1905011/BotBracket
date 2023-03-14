@@ -14,9 +14,9 @@ export default function Signup() {
     <div className="hide-OF background-style-all">
       <div className="col-container">
         <CSSTransition appear in classNames="login-transition" timeout={350}>
-          <div className="login pad-2">
+          <div className="login signup pad-2">
             <h2>Welcome To BotBracket</h2>
-            <form className="col-container">
+            <form className="col-container pad-2">
               <label className="left-align">Name</label>
               <input
                 type="userName"

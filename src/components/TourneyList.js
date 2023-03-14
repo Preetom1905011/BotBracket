@@ -18,6 +18,7 @@ const TourneyList = () => {
 
   // Load the tournaments from DB on mount
   useEffect(() => {
+    console.log(process.env.REACT_APP_URL)
     const fetchTMS = async () => {
       const response = await fetch(process.env.REACT_APP_URL+'/api/tournaments')
       const json = await response.json()
