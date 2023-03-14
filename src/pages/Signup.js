@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import { Link} from "react-router-dom";
 
 export default function Signup() {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [inPass, setInPass] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,15 @@ export default function Signup() {
         <CSSTransition appear in classNames="login-transition" timeout={350}>
           <div className="login pad-2">
             <h2>Welcome To BotBracket</h2>
-            <form className="col-container pad-2">
+            <form className="col-container">
+              <label className="left-align">Name</label>
+              <input
+                type="userName"
+                value={userName}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+              />
               <label className="left-align">Email Address</label>
               <input
                 type="email"
