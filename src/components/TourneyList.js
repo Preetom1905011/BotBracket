@@ -36,7 +36,7 @@ const TourneyList = () => {
   }, [])
 
   return (
-      <div>
+      <div className='TM-scroll-box'>
         {allTournaments && allTournaments.map(TM => (
           (selectedTourney && selectedTourney._id === TM._id?
             <li className='TM-list-item container TM-list-item-selected' key={TM._id}>

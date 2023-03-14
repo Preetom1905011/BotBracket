@@ -34,7 +34,7 @@ export default function Roster() {
   };
 
   return (
-    <div>
+    <div className="background-style-all">
       <div className="side-grid-main">
         <CSSTransition
           appear

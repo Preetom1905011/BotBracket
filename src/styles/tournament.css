@@ -2,6 +2,13 @@
   box-shadow: 5px 0px 5px rgb(96, 223, 98);
 }
 
+.TM-scroll-box {
+  height: 86%;
+  margin-bottom: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .TM-edit-form {
   display: flex;
   flex-direction: row;
@@ -86,7 +93,7 @@
 }
 
 .TM-list-item {
-  width: 25rem;
+  width: 23.5rem;
   height: 3rem;
   margin-top: 0.5rem;
   margin-right: 1rem;
@@ -99,21 +106,23 @@
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
   background-color: rgb(16, 180, 27);
-  color: white;
+  color: rgb(9, 89, 9);
   border-radius: 0.5rem;
   box-shadow: inset 0 2px 4px lightgray, 5px 5px 2px rgba(0, 0, 0, 0.2);
 }
 .TM-list-item:hover {
-  background-color: lightsteelblue;
-  color: black;
-  border: 1px solid lightslategrey;
+  background-color: #e13941;
+  box-shadow: inset 0 2px 4px rgb(255, 254, 254), 5px 5px 2px rgba(0, 0, 0, 0.2);
+  color: white;
+  border: 1px solid rgb(255, 132, 132);
   transform: translateX(0.5rem);
 }
 
 .TM-list-item-selected {
-  background-color: lightsteelblue;
-  color: black;
-  border: 1px solid lightslategrey;
+  color: white;
+  background-color: #e13941;
+  box-shadow: inset 0 2px 4px rgb(255, 254, 254), 5px 5px 2px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(255, 132, 132);
   transform: translateX(0.5rem);
 }
 
@@ -123,6 +132,7 @@
   border: 1px solid rgb(210, 208, 208);
   border-radius: 1rem;
   box-shadow: 5px 5px 5px rgb(96, 223, 98);
+  background-color: white;
   margin-top: 2.5rem;
   margin-bottom: 2rem;
   margin-right: 2rem;
@@ -256,10 +266,10 @@
   box-shadow: inset 0 2px 4px lightgray, 5px 5px 2px rgba(0, 0, 0, 0.2);
 }
 .TM-leader-list:nth-of-type(odd) {
-  background-color: #E31C25;
+  background-color: #e13941;
 }
 .TM-leader-list:nth-of-type(even) {
-  background-color: #0d47b3;
+  background-color: rgb(16, 180, 27);
 }
 
 .TMList-transition-appear {

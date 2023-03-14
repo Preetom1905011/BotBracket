@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="hide-OF">
+    <div className="hide-OF background-style-all">
       <div className="col-container">
         <CSSTransition appear in classNames="login-transition" timeout={350}>
           <div className="login pad-2">

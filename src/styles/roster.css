@@ -9,6 +9,7 @@
   flex-direction: column;
   border: 1px solid rgb(210, 208, 208);
   border-radius: 1rem;
+  background-color: white;
   box-shadow: 5px 5px 5px rgb(56, 183, 225);
 }
 

@@ -13,7 +13,7 @@ $nav-color: #e13941;
 }
 
 .main{
-    // background-color: aquamarine;
+    background-color: aquamarine;
     min-height: 91vh;
     display: flex;
     align-items: center;
@@ -43,8 +43,24 @@ $nav-color: #e13941;
         margin-right: 2vw;
         animation: up-down 1.5s linear alternate-reverse infinite;
     }
-}
+    button{
+        width: 12rem;
+        font-size: 1.4rem;
+        margin-top: 1rem;
+        margin-left: 8vw;
+        animation: right 1s 1.5s ease-in forwards;
 
+        background-color: blueviolet;
+        color: white;
+        border: none;
+        border-radius: 1rem;
+        transform: translateX(-100vw);
+
+        &:hover{
+            box-shadow: 3px 3px 3px rgb(6, 148, 101);
+        }
+    }
+}
 
 // .home-transition-appear{
 //     transition: transform 350ms ease-in;

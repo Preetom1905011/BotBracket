@@ -44,7 +44,7 @@ export default function RosterCard({
     console.log("input", input);
 
     // add to bots DB
-    const response = await fetch("http://localhost:4000/api/participants", {
+    const response = await fetch(process.env.REACT_APP_URL+"/api/participants", {
       method: "POST",
       body: JSON.stringify(newName),
       headers: {
@@ -71,7 +71,7 @@ export default function RosterCard({
 
     // add bot id to the selectedTournament
     const responseTM = await fetch(
-      "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id,
+      process.env.REACT_APP_URL+"/api/tournaments/bots/" + selectedTourney._id,
       {
         method: "POST",
         body: JSON.stringify(json),

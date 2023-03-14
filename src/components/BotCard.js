@@ -37,7 +37,7 @@ export default function BotCard({ selectedBot, setSelectedBot }) {
   const handleSave = async (event) => {
     event.preventDefault();
     const response = await fetch(
-      "http://localhost:4000/api/participants/" + editing.id,
+      process.env.REACT_APP_URL+"/api/participants/" + editing.id,
       {
         method: "PATCH",
         body: JSON.stringify(newName),
@@ -82,7 +82,7 @@ export default function BotCard({ selectedBot, setSelectedBot }) {
       // setNames(filteredNames);
 
       const response = await fetch(
-        "http://localhost:4000/api/participants/" + popup.id,
+        process.env.REACT_APP_URL+"/api/participants/" + popup.id,
         {
           method: "DELETE",
         }
@@ -93,7 +93,7 @@ export default function BotCard({ selectedBot, setSelectedBot }) {
         dispatch({ type: "REMOVE_BOT", payload: json });
 
         const response = await fetch(
-          "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id,
+          process.env.REACT_APP_URL+"/api/tournaments/bots/" + selectedTourney._id,
           {
             method: "DELETE",
             body: JSON.stringify(json),

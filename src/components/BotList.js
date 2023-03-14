@@ -40,7 +40,7 @@ const BotList = ({
     const fetchBots = async () => {
       if (selectedTourney._id !== "Default") {
         const response = await fetch(
-          "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id
+          process.env.REACT_APP_URL+"/api/tournaments/bots/" + selectedTourney._id
         );
         const json = await response.json();
 
@@ -64,7 +64,7 @@ const BotList = ({
   }, []);
 
   return (
-    <div>
+    <div className="TM-scroll-box">
       {sortedNames.map((name) =>
         selectedBot && selectedBot._id === name._id ? (
           <li

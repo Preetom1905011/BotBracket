@@ -6,6 +6,7 @@
 }
 
 .main {
+  background-color: aquamarine;
   min-height: 91vh;
   display: flex;
   align-items: center;
@@ -33,6 +34,21 @@
   margin-left: auto;
   margin-right: 2vw;
   animation: up-down 1.5s linear alternate-reverse infinite;
+}
+.main button {
+  width: 12rem;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-left: 8vw;
+  animation: right 1s 1.5s ease-in forwards;
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  transform: translateX(-100vw);
+}
+.main button:hover {
+  box-shadow: 3px 3px 3px rgb(6, 148, 101);
 }
 
 .intro {

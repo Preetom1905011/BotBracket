@@ -12,7 +12,7 @@ export default function Bracket() {
   const [sortedNames, setSortedNames] = useState([]);
 
   return (
-    <div>
+    <div className="background-style-all">
       <div className="side-grid-main">
         <span>
           <CSSTransition appear in classNames="card-transition" timeout={350}>

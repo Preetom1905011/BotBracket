@@ -25,7 +25,7 @@ export default function Tournaments() {
 
     // add Tournament to DB
     const newTourney = { name: inputTourney, participantIDs: [], matchIDs: [] };
-    const response = await fetch("http://localhost:4000/api/tournaments", {
+    const response = await fetch(process.env.REACT_APP_URL+"/api/tournaments", {
       method: "POST",
       body: JSON.stringify(newTourney),
       headers: {
@@ -64,7 +64,7 @@ export default function Tournaments() {
   };
 
   return (
-    <div>
+    <div className="background-style-all">
       <div className="side-grid-main">
         <CSSTransition appear in classNames="TMList-transition" timeout={350}>
           <div className="card-body TM-card-body">

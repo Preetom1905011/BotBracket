@@ -4,11 +4,12 @@ $black-color: #161616;
 $bg-color: #fe5d65;
 $nav-color: #e13941;
 $roster-shadow: rgb(56, 183, 225);
+$match-list-font: rgb(9, 89, 9);
 
 
 .card-body{
     max-width: 28rem;
-    min-height: 80rem;
+    height: 80rem;
     align-self: left;
 
     box-shadow: 5px 0px 5px  $main-color;
@@ -144,7 +145,7 @@ $roster-shadow: rgb(56, 183, 225);
 
 
 .list-item {
-    width: 25rem;
+    width: 23.5rem;
     height: 3rem;
 
     margin-top: 0.5rem;
@@ -265,21 +266,22 @@ $roster-shadow: rgb(56, 183, 225);
     justify-content: space-around;
     padding: 1rem 0.25rem;
 
-    // background-color: $nav-color;
-    background-color: #fcafb2;
+    background-color: $nav-color;
+    // background-color: #fcafb2;
+
     h1{
         flex: 1.5;
         // margin-left: 2rem;
         font-weight: bolder;
         font-size: 2.4rem;
-        // color: white;
-        color: $nav-color;
+        color: white;
+        // color: $nav-color;
         a {
             color: inherit;
             text-decoration: none;
             &:hover{
-                // text-shadow: 2px 2px 2px rgb(173, 169, 169);
-                text-shadow: 2px 2px 2px rgb(249, 240, 240);
+                text-shadow: 2px 2px 2px rgb(173, 169, 169);
+                // text-shadow: 2px 2px 2px rgb(249, 240, 240);
             }
         }
     }
@@ -292,12 +294,12 @@ $roster-shadow: rgb(56, 183, 225);
             font-size: 1.2rem;
             cursor: pointer;
             text-decoration: none;
-            // color: white;
-            color: $nav-color;
+            color: white;
+            // color: $nav-color;
             &:hover{
                 // border-bottom: 5px solid white;
-                // text-shadow: 2px 2px 2px rgb(173, 169, 169);
-                text-shadow: 2px 2px 2px rgb(249, 240, 240);
+                text-shadow: 2px 2px 2px rgb(173, 169, 169);
+                // text-shadow: 2px 2px 2px rgb(249, 240, 240);
             }
         }
     }
@@ -360,6 +362,13 @@ $roster-shadow: rgb(56, 183, 225);
         background-color: $main-color;
         color: white;
     }
+}
+
+.scroll-box{
+    height: 94%;
+    margin-bottom: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 

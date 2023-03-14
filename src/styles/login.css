@@ -8,6 +8,7 @@
   border: 1px solid rgb(77, 75, 75);
   border-radius: 2rem;
   box-shadow: inset 2px 2px 4px lightgray, 4px 4px 10px #0d47b3;
+  background-color: white;
   color: #6195f5;
   text-shadow: 2px 2px 2px rgb(210, 208, 208);
 }

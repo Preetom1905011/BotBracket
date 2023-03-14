@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import '../styles/card.css'
-import {v4 as uuidv4} from "uuid";
-import BotList from './BotList';
-import { useBotsContext } from '../contexts/useBotContext';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import "../styles/card.css";
+import { v4 as uuidv4 } from "uuid";
+import BotList from "./BotList";
+import { useBotsContext } from "../contexts/useBotContext";
 import { useSelectedTMContext } from "../contexts/useSelectedTMContext";
 
-export default function Card({input, setInput, sortedNames, setSortedNames}) {
-
+export default function Card({ input, setInput, sortedNames, setSortedNames }) {
   // const [error, setError] = useState(null);
-  const {names, dispatch} = useBotsContext()
+  const { names, dispatch } = useBotsContext();
   const { selectedTourney } = useSelectedTMContext();
 
   useEffect(() => {
@@ -21,14 +20,22 @@ export default function Card({input, setInput, sortedNames, setSortedNames}) {
     const fetchBots = async () => {
       if (selectedTourney._id !== "Default") {
         const response = await fetch(
-          "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id
+          process.env.REACT_APP_URL+"/api/tournaments/bots/" + selectedTourney._id
         );
         const json = await response.json();
 
         if (response.ok) {
           console.log("-->", json);
           const data = json.map(
-            (bot) => (bot = { _id: bot._id, title: bot.title, chip: bot.chip, teamname: bot.teamname, weightclass: bot.weightclass, signature: bot.signature })
+            (bot) =>
+              (bot = {
+                _id: bot._id,
+                title: bot.title,
+                chip: bot.chip,
+                teamname: bot.teamname,
+                weightclass: bot.weightclass,
+                signature: bot.signature,
+              })
           );
           console.log("SET DATA", data);
           // setNames(data)
@@ -46,18 +53,17 @@ export default function Card({input, setInput, sortedNames, setSortedNames}) {
 
   return (
     <>
-      <div className="card-body">
-          <h2>Leaderboard</h2>
-        {sortedNames.map((name) => (
-              <li className="TM-leader-list container" key={name._id}>
-                {name.title}
-                <div>{name.chip}</div>
-              </li>
-            ))}
+      <div className="card-body ">
+        <h2>Leaderboard</h2>
+        <div className="scroll-box">
+          {sortedNames.map((name) => (
+            <li className="TM-leader-list container" key={name._id}>
+              {name.title}
+              <div>{name.chip}</div>
+            </li>
+          ))}
+        </div>
       </div>
     </>
-  )
+  );
 }
-
-
-

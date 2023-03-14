@@ -37,7 +37,7 @@ export default function TMScene() {
   const handleSave = async (event) => {
     event.preventDefault();
     const response = await fetch(
-      "http://localhost:4000/api/tournaments/" + editing.id,
+      process.env.REACT_APP_URL+"/api/tournaments/" + editing.id,
       {
         method: "PATCH",
         body: JSON.stringify(newTourney),
@@ -69,10 +69,11 @@ export default function TMScene() {
 
   useEffect(() => {
     const fetchTMparts = async () => {
+      console.log("process:", process.env)
       if (selectedTourney._id !== "Default") {
         // load the participants
         const response2 = await fetch(
-          "http://localhost:4000/api/tournaments/bots/" + selectedTourney._id
+          'http://localhost:4000/api/tournaments/bots/' + selectedTourney._id
         );
         const json2 = await response2.json();
 
@@ -91,7 +92,7 @@ export default function TMScene() {
 
         // load the matches
         const response3 = await fetch(
-          "http://localhost:4000/api/tournaments/matches/" + selectedTourney._id
+          process.env.REACT_APP_URL+"/api/tournaments/matches/" + selectedTourney._id
         );
         const json3 = await response3.json();
 
@@ -120,7 +121,7 @@ export default function TMScene() {
   const handleDeleteTrue = async () => {
     if (popup.show && popup.id) {
       const response = await fetch(
-        "http://localhost:4000/api/tournaments/" + popup.id,
+        process.env.REACT_APP_URL+"/api/tournaments/" + popup.id,
         {
           method: "DELETE",
         }
@@ -147,7 +148,7 @@ export default function TMScene() {
 
       // Delete all the participants from bot DB - update DELETE BOT to DELETE BOTS in context and add a deleteMultipleBots in controller
       const response2 = await fetch(
-        "http://localhost:4000/api/participants/",
+        process.env.REACT_APP_URL+"/api/participants/",
         {
           method: "DELETE",
           body: JSON.stringify(json),
@@ -160,7 +161,7 @@ export default function TMScene() {
        
       // Delete all the matches from matches DB -
       const response3 = await fetch(
-        "http://localhost:4000/api/matches",
+        process.env.REACT_APP_URL+"/api/matches",
         {
           method: "DELETE",
           body: JSON.stringify(json),
@@ -233,11 +234,11 @@ export default function TMScene() {
           <div className="TM-matchHist">
             {matches.map((match) => (
               <li className="match-hist-list TM-hist-list" key={match._id}>
-                <div className="match-list-each">
+                <div className={Number(match.redScore) < 0? 'match-list-each list-each-lose': 'match-list-each list-each-win'}>
                   <span>{match.red}</span>
                   {match.redScore}
                 </div>
-                <div className="match-list-each list-each2">
+                <div className={Number(match.blueScore) < 0? 'match-list-each list-each-lose': 'match-list-each list-each-win'}>
                   <span>{match.blueScore}</span>
                   <span>{match.blue}</span>
                 </div>

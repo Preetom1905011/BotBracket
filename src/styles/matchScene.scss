@@ -1,6 +1,10 @@
 $main-color:#E31C25;
 $list-color2:#0d47b3;
 $border-color: rgb(210, 208, 208);
+$lose-color: #e13941;
+$win-color: rgb(96, 223, 98);
+$TM-list-color: rgb(16, 180, 27);
+$match-list-font: rgb(9, 89, 9);
 
 .column-grid {
     align-content: center;
@@ -383,6 +387,14 @@ $border-color: rgb(210, 208, 208);
     justify-content: space-between;
 }
 
-.list-each2{
-    background-color: $list-color2;
+.list-each-lose{
+    background-color: $lose-color;
+    color: white;
+    box-shadow: inset 0 2px 4px rgb(249, 156, 62), 8px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.list-each-win{
+    background-color: $win-color;
+    // color: whitesmoke;
+    color: $match-list-font;
 }

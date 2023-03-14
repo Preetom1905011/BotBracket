@@ -8,6 +8,7 @@ const botRoutes = require("./routes/participants");
 const matchRoutes = require("./routes/matches");
 const tournamentRoutes = require("./routes/tournaments");
 const selectedTMRoutes = require("./routes/selectedTM");
+const userRoutes = require("./routes/user");
 
 // express app
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/participants", botRoutes);
 app.use("/api/matches", matchRoutes);
 app.use("/api/tournaments", tournamentRoutes);
 app.use("/api/selectedTM", selectedTMRoutes);
+app.use("/api/user", userRoutes);
 
 // connect to db
 mongoose

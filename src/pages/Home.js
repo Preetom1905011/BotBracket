@@ -1,8 +1,9 @@
 import React from 'react';
-import home_img from '../media/home_img.png';
+import home_img from '../media/home_img2.png';
 import scrappy_sticker from '../media/scrappy-sticker.png';
 import '../styles/home.css';
 import { CSSTransition } from 'react-transition-group';
+import { Link} from 'react-router-dom'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <div>
           <h2>Robot Battles</h2>
           <h3>Have never been easier</h3>
+          <Link to='/tournaments'><button >Get Started</button></Link>
         </div>
         <img src={home_img}/>
       </div>
